@@ -11,6 +11,15 @@ using namespace std;
 
 int Adj_Matrix[10][10];
 
+void DFS(int current, bool visited[], int CityNo) {
+    visited[current] = true;
+    for (int i = 0; i < CityNo; i++) {
+        if (Adj_Matrix[current][i] != 0 && !visited[i]) {
+            DFS(i, visited, CityNo);
+        }
+    }
+}
+
 int main() {
     int CityNo;
     cout << "Enter the no. of Cities (max 10): ";
@@ -61,29 +70,23 @@ int main() {
         cout << endl;
     }
 
-    bool ArrayConnect[10] = {false};
+    bool visited[10] = {false};
+
+    // Start DFS from city 0
+    DFS(0, visited, CityNo);
+
     bool isConnected = true;
-
     for (int i = 0; i < CityNo; i++) {
-        for (int j = 0; j < CityNo; j++) {
-            if (Adj_Matrix[i][j] != 0) {
-                ArrayConnect[i] = true;
-                break;
-            }
-        }
-    }
-
-    for (int i = 0; i < CityNo; i++) {
-        if (!ArrayConnect[i]) {
+        if (!visited[i]) {
             isConnected = false;
             break;
         }
     }
 
     if (isConnected) {
-        cout << "Graph is connected." << endl;
+        cout << "\nGraph is connected." << endl;
     } else {
-        cout << "Graph is not connected." << endl;
+        cout << "\nGraph is not connected." << endl;
     }
 
     return 0;
