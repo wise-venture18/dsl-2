@@ -1,27 +1,33 @@
+# Class representing a person with name and telephone number
 class Person:
     def __init__(self):
         self.name = ""
         self.telephone_number = 0
 
+    # Method to accept user input
     def set_data(self):
         self.name = input("Enter name: ")
         self.telephone_number = int(input("Enter telephone number: "))
 
+    # Method to display person data
     def display_data(self):
         print(f"Name: {self.name}")
         print(f"Telephone number: {self.telephone_number}")
 
 
+# Hash function to compute index based on key
 def hash_key(key, size):
     return key % size
 
 
+# Hash table using Linear Probing
 class HashTableLinearProbing:
     def __init__(self, size=10):
         self.ht = [None] * size
         self.size = size
-        self.comparison = [0] * size
+        self.comparison = [0] * size  # Tracks number of comparisons for each insertion
 
+    # Insert a person using linear probing for collision resolution
     def insert_data(self, person):
         comp = 1
         index = hash_key(person.telephone_number, self.size)
@@ -30,7 +36,7 @@ class HashTableLinearProbing:
         while self.ht[index] is not None:
             index = (index + 1) % self.size
             comp += 1
-            if index == original_index:
+            if index == original_index:  # Table is full
                 print("Hash table is full.")
                 return
 
@@ -38,6 +44,7 @@ class HashTableLinearProbing:
         self.comparison[index] = comp
         print(f"Name: {person.name} entered with telephone number: {person.telephone_number} with comparisons: {comp}")
 
+    # Search for a telephone number
     def search_data(self, telephone):
         index = hash_key(telephone, self.size)
         original_index = index
@@ -51,6 +58,7 @@ class HashTableLinearProbing:
         print(f"Number {telephone} not found in the hash table.")
         return False
 
+    # Delete a telephone number
     def delete_data(self, telephone):
         index = hash_key(telephone, self.size)
         original_index = index
@@ -65,6 +73,7 @@ class HashTableLinearProbing:
         print(f"Number {telephone} not found in the hash table.")
         return False
 
+    # Display the hash table
     def display(self):
         print("Index\t| Name\t\t| Telephone Number\t| Comparisons")
         for i in range(self.size):
@@ -74,12 +83,14 @@ class HashTableLinearProbing:
                 print(f"{i}\t| Empty\t\t| \t\t\t| ")
 
 
+# Hash table using Quadratic Probing
 class HashTableQuadraticProbing:
     def __init__(self, size=10):
         self.ht = [None] * size
         self.size = size
         self.comparison = [0] * size
 
+    # Insert a person using quadratic probing for collision resolution
     def insert_data(self, person):
         comp = 1
         index = hash_key(person.telephone_number, self.size)
@@ -90,7 +101,7 @@ class HashTableQuadraticProbing:
             index = (original_index + i * i) % self.size
             comp += 1
             i += 1
-            if index == original_index:
+            if index == original_index:  # Table is full
                 print("Hash table is full.")
                 return
 
@@ -98,6 +109,7 @@ class HashTableQuadraticProbing:
         self.comparison[index] = comp
         print(f"Name: {person.name} entered with telephone number: {person.telephone_number} with comparisons: {comp}")
 
+    # Search for a telephone number
     def search_data(self, telephone):
         index = hash_key(telephone, self.size)
         original_index = index
@@ -114,6 +126,7 @@ class HashTableQuadraticProbing:
         print(f"Number {telephone} not found in the hash table.")
         return False
 
+    # Delete a telephone number
     def delete_data(self, telephone):
         index = hash_key(telephone, self.size)
         original_index = index
@@ -131,6 +144,7 @@ class HashTableQuadraticProbing:
         print(f"Number {telephone} not found in the hash table.")
         return False
 
+    # Display the hash table
     def display(self):
         print("Index\t| Name\t\t| Telephone Number\t| Comparisons")
         for i in range(self.size):
@@ -140,6 +154,7 @@ class HashTableQuadraticProbing:
                 print(f"{i}\t| Empty\t\t| \t\t\t| ")
 
 
+# Main driver function for the program
 def main():
     while True:
         print("----------------------------------------------------------")
